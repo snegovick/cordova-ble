@@ -19,6 +19,7 @@ public class BLE extends CordovaPlugin implements LeScanCallback {
 	private CallbackContext mResetCallbackContext;
 	private Context mContext;
 	private boolean mRegisteredReceiver = false;
+  private final int REQUEST_BT_ENABLE = 59627; /*Random integer*/
 
 	int mNextGattHandle = 1;
 	HashMap<Integer, GattHandler> mGatt = null;
@@ -32,6 +33,9 @@ public class BLE extends CordovaPlugin implements LeScanCallback {
 			mContext.registerReceiver(new BluetoothStateReceiver(), new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED));
 			mRegisteredReceiver = true;
 		}
+
+    Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+    cordova.startActivityForResult(this, enableBtIntent, REQUEST_BT_ENABLE);
 	}
 
 	@Override
