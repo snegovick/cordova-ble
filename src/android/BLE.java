@@ -34,8 +34,19 @@ public class BLE extends CordovaPlugin implements LeScanCallback {
 			mRegisteredReceiver = true;
 		}
 
-    Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-    cordova.startActivityForResult(this, enableBtIntent, REQUEST_BT_ENABLE);
+    BluetoothAdapter btAdapter = ((Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR1)
+                                  ?((BluetoothManager)mContext.getSystemService(Context.BLUETOOTH_SERVICE)).getAdapter()
+                                  :(BluetoothAdapter.getDefaultAdapter()));
+
+    if(btAdapter==null){
+      return;
+    }
+    if(btAdapter.getState()==BluetoothAdapter.STATE_ON){
+      //Bluetooth is ON
+    } else {
+      Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+      cordova.startActivityForResult(this, enableBtIntent, REQUEST_BT_ENABLE);
+    }
 	}
 
 	@Override
