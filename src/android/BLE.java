@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import android.bluetooth.*;
 import android.bluetooth.BluetoothAdapter.LeScanCallback;
 import android.content.*;
+import android.os.*;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
